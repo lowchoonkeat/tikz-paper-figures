@@ -27,7 +27,8 @@ Use for:
 Do **not** use for data plots (bars, intervals, scatter, faceted panels). Those belong in
 matplotlib or pgfplots, driven by the analysis script, because the figure must regenerate when
 the data changes. Hand-positioned TikZ coordinates encode data into geometry and cannot be
-re-run.
+re-run. For that half of a manuscript, use the `nature-figure` skill; the two are complementary
+and the boundary is documented in `README.md`.
 
 ## Workflow
 

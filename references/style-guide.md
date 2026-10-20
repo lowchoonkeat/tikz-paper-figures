@@ -76,7 +76,22 @@ Any time the figure needs a footnote, ask whether the footnote belongs in the ca
 does — but a marker (`†`, `*`) inside the figure is worth keeping when it prevents a wrong
 inference, because readers who skim skip captions.
 
-## 7. Checks before delivery
+## 7. Borrowed discipline
+
+Four rules taken from `nature-figure`'s vector-schematic conventions, because they are stricter
+than what this skill had and they cost nothing to follow:
+
+- **One accent, and it marks the paper's contribution.** The accent colour identifies the new
+  component, not a second category. `alert` is exempt: red is a signal, not a category, and it may
+  appear wherever something is broken.
+- **Show repetition as `×N` or two offset boxes, not N copies.** Six drawn groups out of fifty is
+  a caption note; fifty drawn groups is a different figure.
+- **Dashed carries exactly one meaning per figure.** Either group boundaries or feedback, never
+  both. Give the second meaning a dotted line.
+- **Nest at most three levels**, and never fill a container darker than its children. Outline-only
+  containers are the safe default.
+
+## 8. Checks before delivery
 
 1. **Grayscale.** Convert to greyscale. If two roles become the same grey, they need different
    fills or different border weights, not just different hues.
