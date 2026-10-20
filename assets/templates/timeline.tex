@@ -1,0 +1,54 @@
+% Template: timeline with a shaded window, event markers and a brace annotation.
+% Use for outage windows, protocol phases, experiment schedules, staged rollouts.
+% Keep the axis the only element that spans the full width.
+\documentclass[border=6pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,fit,backgrounds,shapes.geometric,decorations.pathreplacing}
+\input{tikz-house-style}
+
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm, line width=0.6pt, color=ink]
+
+% ---------- axis ----------
+\draw[->, line width=0.7pt, draw=ink!75] (0,0) -- (12.6,0)
+  node[right, font=\scriptsize, text=ink!75] {time};
+
+\foreach \x/\t in {0.4/00:00, 2.4/06:00, 4.4/12:00, 6.4/18:00, 8.4/24:00}{
+  \draw[line width=0.6pt, draw=ink!60] (\x,0.08) -- (\x,-0.08);
+  \node[below=3pt, font=\scriptsize, text=ink!75] at (\x,0) {\t};
+}
+
+% ---------- shaded window: draw before the axis so it sits behind ----------
+\begin{scope}[on background layer]
+  \fill[alertfill] (6.4,-0.55) rectangle (8.4,1.55);
+\end{scope}
+\draw[dashed, draw=alertline, line width=0.6pt] (6.4,-0.55) -- (6.4,1.55);
+\draw[dashed, draw=alertline, line width=0.6pt] (8.4,-0.55) -- (8.4,1.55);
+\node[anchor=south, font=\scriptsize, text=alertline] at (7.4,1.55) {window label};
+
+% ---------- events on the axis ----------
+\foreach \x/\lab/\dy in {3.1/event one/0.55, 5.2/event two/0.9, 9.6/event three/0.55}{
+  \fill[primaryline] (\x,0) circle (0.07);
+  \draw[line width=0.6pt, draw=primaryline!70] (\x,0) -- (\x,\dy-0.12);
+  \node[anchor=south, font=\scriptsize, text=ink!85] at (\x,\dy-0.12) {\lab};
+}
+
+% ---------- brace annotation under the axis ----------
+\draw[decorate, decoration={brace, amplitude=4pt, mirror}, draw=ink!60, line width=0.6pt]
+  (6.4,-0.75) -- (8.4,-0.75)
+  node[midway, below=5pt, font=\scriptsize, text=ink!80] {duration};
+
+% ---------- policy band: who is in control, as a second row of segments ----------
+\fill[primaryfill]   (0.4,2.35) rectangle (6.4,2.75);
+\fill[accentfill]    (6.4,2.35) rectangle (8.4,2.75);
+\fill[primaryfill]   (8.4,2.35) rectangle (12.4,2.75);
+\node[font=\scriptsize, text=primaryline] at (3.4,2.55) {controller A};
+\node[font=\scriptsize, text=accentline]  at (7.4,2.55) {fallback};
+\node[font=\scriptsize, text=primaryline] at (10.4,2.55) {controller A};
+\node[anchor=east, font=\scriptsize, text=ink!75] at (0.3,2.55) {authority};
+
+\end{tikzpicture}
+\end{document}

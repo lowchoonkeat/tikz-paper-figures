@@ -1,0 +1,78 @@
+% Template: layered architecture with a guard and two branches.
+% Copy with tikz-house-style.tex into the project's figures/ directory.
+% Replace the placeholder labels; keep the coordinate scheme and the row heights.
+\documentclass[border=6pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,calc,fit,backgrounds,shapes.geometric}
+\input{tikz-house-style}
+
+\begin{document}
+\begin{tikzpicture}[x=1cm, y=1cm, line width=0.6pt, color=ink]
+
+% ---------- upper layer ----------
+\node[box={primaryline}{primaryfill}, minimum width=7.4cm, minimum height=1.25cm]
+  (upper) at (6.3,9.25)
+  {\figclaim{Upper layer name}\\[1pt]
+   \figdetail{what it decides, at what cadence}};
+
+% ---------- link with a break marker ----------
+\draw[link] (6.3,8.62) -- (6.3,7.50);
+\node[anchor=east, font=\scriptsize, text=ink!80] at (5.85,8.06) {link};
+\breakmark{6.3,8.06}{0.17}
+\node[anchor=west, font=\scriptsize, text=alertline, align=left]
+  at (6.62,8.06) {failure mode\\condition and duration};
+
+% ---------- guarded container ----------
+\begin{scope}[on background layer]
+  \draw[group] (0.95,3.15) rectangle (11.85,7.70);
+\end{scope}
+\node[anchor=north west, font=\scriptsize\itshape, text=ink!60]
+  at (1.12,7.63) {lower layer (unit)};
+
+% guard decision
+\node[diamond, aspect=2.55, draw=secondaryline, fill=secondaryfill, line width=0.6pt,
+      minimum width=4.6cm, inner sep=1pt, align=center] (guard) at (6.3,6.60)
+  {\footnotesize condition?\\[1pt] \fignote{threshold}};
+
+% ---------- branches: keep both boxes the same size ----------
+\node[box={primaryline}{primaryfill}, text width=3.85cm, minimum height=2.0cm]
+  (branchA) at (3.0,4.45)
+  {\figcat{nominal path}\\[2pt]
+   \figclaim{action taken}\\[2pt]
+   \figdetail{detail line one\\detail line two}};
+
+\node[box={accentline}{accentfill}, text width=3.85cm, minimum height=2.0cm]
+  (branchB) at (9.6,4.45)
+  {\figcat{fallback path}\\[2pt]
+   \figclaim{action taken}\\[2pt]
+   \figdetail{detail line one\\detail line two}};
+
+\draw[thinflow, draw=primaryline] (4.0,6.60) -- (3.0,6.60) -- (3.0,5.45);
+\draw[thinflow, draw=accentline]  (8.6,6.60) -- (9.6,6.60) -- (9.6,5.45);
+\node[anchor=west, font=\scriptsize, text=primaryline] at (3.12,5.95) {yes};
+\node[anchor=west, font=\scriptsize, text=accentline]  at (9.72,5.95) {no};
+
+% ---------- merge: plain lines, one arrowhead at the exit ----------
+\draw[line width=0.6pt, draw=ink!70] (3.0,3.45) -- (3.0,3.30);
+\draw[line width=0.6pt, draw=ink!70] (9.6,3.45) -- (9.6,3.30);
+\draw[line width=0.6pt, draw=ink!70] (3.0,3.30) -- (9.6,3.30);
+\draw[flow] (6.3,3.30) -- (6.3,2.05);
+\node[anchor=west, font=\scriptsize, align=left, text=ink!80]
+  at (6.5,2.45) {actuation\\N units};
+
+% ---------- actuator rail ----------
+\draw[rail] (2.0,2.05) -- (10.7,2.05);
+\node[anchor=east, font=\footnotesize, text=ink!85] at (1.90,2.05) {plant name};
+\foreach \x/\lab in {2.75/A1, 4.15/A2, 5.55/A3, 7.05/A4, 8.45/A5, 9.85/A6}{
+  \draw[line width=0.6pt, draw=neutral] (\x,2.05) -- (\x,1.45);
+  \node[box={neutral!70}{neutral!8}, minimum width=1.15cm, minimum height=0.6cm,
+        inner sep=1pt, font=\scriptsize] at (\x,1.12) {\lab};
+}
+\node[anchor=north west, font=\scriptsize, text=ink!70, align=left]
+  at (10.75,1.45) {6 of N\\shown};
+
+\end{tikzpicture}
+\end{document}

@@ -1,0 +1,17 @@
+# TeX build artefacts
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.toc
+
+# template build output: keep the examples, ignore scratch builds
+assets/templates/*.pdf
+assets/templates/*.png
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
